@@ -1,15 +1,20 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import studentsJson from '../students.json'
 
-class Students extends Component {
 
-    state = {
-        students: studentsJson
-    }
+function Students() {
 
-    handleSort = () => {
-        // destructure the state
-        const {students} = this.state
+    // 1: We called it as `students` - you can call it anything
+    // 2: updateStudents is a function, when you invoke this function and pass certain parameters to it, it will automatically update the students state
+    const [students, updateStudents] = useState(studentsJson)
+    //                                               ^
+    //                                               |
+    //                                               |
+    //                                               |
+    //                                               |
+    //                             initial value stored in the student state
+
+    const handleSort = () => {
 
         //clone the original array before sorting
         let cloneStudents = JSON.parse(JSON.stringify( students ))
@@ -27,30 +32,24 @@ class Students extends Component {
         })
 
         // updating the state so that the page re-renders
-        this.setState({
-            students: cloneStudents
-        })
-        
+        // calling `updateStudents` will internally update the state `students`
+        updateStudents(cloneStudents)
+
     }
 
-    handleAdd = () => {
-        const {students} = this.state
-        // grab a random student 
+    const handleAdd = () => {
 
+        // grab a random student 
         let randomIndex = Math.floor(Math.random() * students.length)
         let randomElement = students[randomIndex]
 
-        // unshift, push ??? -- will mutate the original state. And not rerender the page
-
         // Update the state so that the page re-renders
-        this.setState({
-            students: [randomElement , ...students]
-        })
+        // calling `updateStudents` will internally update the state `students`
+        updateStudents([randomElement , ...students])
 
     }
 
-    handleDelete = (index) => {
-        const {students} = this.state
+    const handleDelete = (index) => {
 
         // Filter all the students that do not match the index of the student who's delete button was clicked
         let filteredStudents = students.filter((student, i ) => {
@@ -58,47 +57,30 @@ class Students extends Component {
         })
         
         // Update the state so that the page re-renders
-        this.setState({
-            students: filteredStudents
-        })
-    }
+        // calling `updateStudents` will internally update the state `students`
+        updateStudents(filteredStudents)
 
-    render() {
-        // `this` will always work here
-        return (
-            <div>
-                My students
-                <div>
-                    <button onClick={ this.handleSort } >Sort</button>
-                    <button onClick={ this.handleAdd } >Add</button>
-                </div>
-                { 
-                    this.state.students.map((student, i) => {
-                        return (
-                            <div key={i}>
-                                {student.name}
-                                <button onClick={ () => { this.handleDelete(i) } }>Delete</button>
-                            </div>
-                        )
-                    }) 
-                }
-                {/* 
-                
-                    Map does this and returns you an array of elements
-                    [
-                        <h4>Marta</h4>,
-                        <h4>Lovro</h4>,
-                        .
-                        .
-                        .
-                        <h4>Juan</h4>
-                    ]
-                
-                
-                */}
-            </div>
-        )
     }
+    return (
+        <div>
+            My students
+            <div>
+                <button onClick={ handleSort } >Sort</button>
+                <button onClick={ handleAdd } >Add</button>
+            </div>
+            { 
+                students.map((student, i) => {
+                    return (
+                        <div key={i}>
+                            {student.name}
+                            <button onClick={ () => { handleDelete(i) } }>Delete</button>
+                        </div>
+                    )
+                }) 
+            }
+        </div>
+    )
 }
+
 
 export default Students
