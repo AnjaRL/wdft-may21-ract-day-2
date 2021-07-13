@@ -1,0 +1,12 @@
+[
+    {"id":1,"name":"Marta","city":"Madrid"},
+    {"id":2,"name":"Lovro","city":"Berlin"},
+    {"id":3,"name":"Ross","city":"Amsterdam"},
+    {"id":4,"name":"Katie","city":"Hamburg"},
+    {"id":5,"name":"Juan","city":"Sevilla"},
+    {"id":6,"name":"Sandra","city":"Hamburg"},
+    {"id":7,"name":"Vykintas","city":"Valencia"},
+    {"id":8,"name":"Laura","city":"Bilbao"},
+    {"id":9,"name":"Jordane","city":"London"},
+    {"id":10,"name":"Santiago","city":"Barcelona"}
+]
